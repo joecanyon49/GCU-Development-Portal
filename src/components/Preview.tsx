@@ -192,7 +192,7 @@ export const Preview = forwardRef<HTMLDivElement, PreviewProps>(({ data, classNa
                     case 'timeline': return <Timeline key={section.id} section={section as TimelineSection} />;
                     case 'pricing': return <Pricing key={section.id} section={section as PricingSection} />;
                     case 'next_steps': return <NextSteps key={section.id} section={section as NextStepsSection} />;
-                    default: return <div key={section.id} className="p-10 text-red-500">Unknown Section Type: {section.type}</div>;
+                    default: return <div key={(section as any).id} className="p-10 text-red-500">Unknown Section Type: {(section as any).type}</div>;
                 }
             })}
 
