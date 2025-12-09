@@ -63,7 +63,7 @@ export default function Sidebar({ userName }: { userName?: string }) {
                         </div>
 
                         {/* Navigation */}
-                        <nav className={clsx("flex-1 space-y-2", !userName && "opacity-50 pointer-events-none grayscale")}>
+                        <nav className={clsx("flex-1 space-y-2")}>
                             {navItems.map((item) => {
                                 const isActive = pathname === item.href;
                                 return (
@@ -104,8 +104,8 @@ export default function Sidebar({ userName }: { userName?: string }) {
                                     {userName ? userName[0] : <Lock size={14} />}
                                 </div>
                                 <div className="flex-1">
-                                    <p className="text-sm font-medium text-white">{userName ? `Hello, ${userName}` : 'Portal Locked'}</p>
-                                    <p className="text-xs text-gray-500">{userName ? 'GCU Team' : 'Sign In Required'}</p>
+                                    <p className="text-sm font-medium text-white">{userName ? `Hello, ${userName}` : 'Guest Access'}</p>
+                                    <p className="text-xs text-gray-500">{userName ? 'GCU Team' : 'Development Preview'}</p>
                                 </div>
                             </div>
                             {userName && (

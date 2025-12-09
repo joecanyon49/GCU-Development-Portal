@@ -61,7 +61,8 @@ export function middleware(request: NextRequest) {
 
     if (!hasAuth && !isPublicPath) {
         // Redirect to login if not authenticated and trying to access protected route
-        return NextResponse.redirect(new URL('/login', request.url));
+        // TEMPORARILY DISABLED: Allow access behind the password gate
+        // return NextResponse.redirect(new URL('/login', request.url));
     }
 
     if (hasAuth && pathname === '/login') {

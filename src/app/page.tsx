@@ -6,11 +6,11 @@ import LiveDashboard from '@/components/LiveDashboard';
 
 export default async function Home() {
   const cookieStore = await cookies();
-  const userName = cookieStore.get('auth_user')?.value;
+  const userName = cookieStore.get('auth_user')?.value || 'Guest';
 
-  if (!userName) {
-    redirect('/login');
-  }
+  // if (!userName) {
+  //   redirect('/login');
+  // }
 
   return (
     <div className="space-y-12">
