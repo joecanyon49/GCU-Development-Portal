@@ -1,26 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* GCU Brand Colors */
+  --gcu-purple: #522398;
+  --gcu-purple-dark: #3a176e;
+  --gcu-purple-light: #7a4bc8;
+  --gcu-gray: #f0f0f0;
+  --gcu-black: #1a1a1a;
+
+  /* Theme Colors */
+  --background: #0f0f12;
+  /* Very dark, almost black */
+  --foreground: #ededed;
+  --card-bg: #18181b;
+  --card-border: #27272a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-gcu-purple: var(--gcu-purple);
+  --color-gcu-purple-dark: var(--gcu-purple-dark);
+  --color-gcu-purple-light: var(--gcu-purple-light);
+  --color-card: var(--card-bg);
+  --color-card-border: var(--card-border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
