@@ -5,6 +5,7 @@ export interface ProposalTheme {
     textColor: string;
     backgroundColor: string;
     fontFamily: string;
+    overlayOpacity?: number; // 0 to 1
 }
 
 export interface ProposalMeta {
@@ -12,6 +13,7 @@ export interface ProposalMeta {
     preparedFor: string;
     preparedBy: string;
     date: string;
+    clientLogo?: string; // Base64 or URL
 }
 
 // --- Section Types ---
@@ -28,63 +30,89 @@ export interface CoverSection extends SectionBase {
     image: string;
 }
 
-export interface ExecutiveSummarySection extends SectionBase {
-    type: 'executive_summary';
+export interface SummaryPillar {
     title: string;
-    content: string;
+    description: string;
+    icon: string; // '1', '2', '3'
 }
 
+// 1. Synopsis (formerly Executive Summary)
+export interface SynopsisSection extends SectionBase {
+    type: 'synopsis';
+    title: string;
+    content: string;
+    summaryPillars: SummaryPillar[];
+    image?: string;
+}
+
+// 2. Story (The "Why")
+export interface StorySection extends SectionBase {
+    type: 'story';
+    title: string;
+    subtitle?: string;
+    content: string;
+    image?: string;
+    quote?: string;
+}
+
+// 3. Problem (The "Gap" or "Need")
+export interface ProblemSection extends SectionBase {
+    type: 'problem';
+    title: string;
+    description: string;
+    points: { title: string; description: string }[];
+    image?: string;
+}
+
+// 4. Content (Formerly Scope of Work / The "What")
 export interface Deliverable {
     title: string;
     description: string;
     items: string[];
 }
 
-export interface ScopeOfWorkSection extends SectionBase {
-    type: 'scope_of_work';
+export interface ContentSection extends SectionBase {
+    type: 'content';
     title: string;
     elements: Deliverable[];
+    image?: string;
 }
 
-export interface TimelinePhase {
-    name: string;
-    duration: string;
-    description: string;
+// 5. Impact Charts (Formerly Stats)
+export interface StatItem {
+    label: string;
+    value: string;
+    suffix?: string;
+    description?: string;
 }
 
-export interface TimelineSection extends SectionBase {
-    type: 'timeline';
+export interface ImpactSection extends SectionBase {
+    type: 'impact';
     title: string;
-    phases: TimelinePhase[];
+    stats: StatItem[];
 }
 
+// 6. Proposal (Formerly Pricing / Investment)
 export interface PricingItem {
     item: string;
     cost: string;
     isTotal?: boolean;
 }
 
-export interface PricingSection extends SectionBase {
-    type: 'pricing';
+export interface InvestmentSection extends SectionBase {
+    type: 'investment';
     title: string;
     elements: PricingItem[];
 }
 
-export interface NextStepsSection extends SectionBase {
-    type: 'next_steps';
-    title: string;
-    content: string;
-    ctaText: string;
-    ctaLink: string;
-}
-
 export type ProposalSection =
     | CoverSection
-    | ExecutiveSummarySection
-    | ScopeOfWorkSection
-    | TimelineSection
-    | PricingSection
-    | NextStepsSection;
+    | SynopsisSection
+    | StorySection
+    | ProblemSection
+    | ContentSection
+    | ImpactSection
+    | InvestmentSection;
 
 export interface ProposalData {
     meta: ProposalMeta;
@@ -98,7 +126,8 @@ export const INITIAL_PROPOSAL_DATA: ProposalData = {
         title: "Partnership Proposal",
         preparedFor: "A.R. Mays Construction",
         preparedBy: "Grand Canyon University",
-        date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+        date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+        clientLogo: ""
     },
     theme: {
         primaryColor: "#522398", // GCU Purple
@@ -112,56 +141,132 @@ export const INITIAL_PROPOSAL_DATA: ProposalData = {
             id: 'cover-1',
             type: 'cover',
             title: "Partnership Proposal",
-            subtitle: "Building the Future of Workforce Development",
-            image: "https://placehold.co/816x1056/EEE/31343C.png?text=Cover+Image+Placeholder"
+            subtitle: "Find Your Purpose",
+            image: "/assets/proposal/cover-aerial.jpg"
         },
+        // 1. Synopsis
         {
-            id: 'exec-1',
-            type: 'executive_summary',
-            title: "Overview",
-            content: "Grand Canyon University (GCU) is looking to partner with A.R. Mays Construction on a variety of different initiatives to support students and programs at GCU. We propose a collaboration in 3 key pillars: Center for Workforce Development, College of Business and Engineering integration, and exclusive access to GCU events."
+            id: 'synopsis-1',
+            type: 'synopsis',
+            title: "Synopsis",
+            content: "Grand Canyon University (GCU) is a private Christian university located in Phoenix, Arizona, dedicated to helping students find their purpose. We propose a collaboration with A.R. Mays Construction to support workforce development and student success along 3 key pillars.",
+            image: "/assets/proposal/engineering-student.jpg",
+            summaryPillars: [
+                {
+                    title: "Workforce",
+                    description: "Collaborating to anticipate hiring needs.",
+                    icon: "1"
+                },
+                {
+                    title: "Integration",
+                    description: "Curriculum advice & talent pipelines.",
+                    icon: "2"
+                },
+                {
+                    title: "Impact",
+                    description: "Community engagement & access.",
+                    icon: "3"
+                }
+            ]
         },
+        // 2. Story
         {
-            id: 'scope-1',
-            type: 'scope_of_work',
-            title: "Proposed Partnership Pillars",
+            id: 'story-1',
+            type: 'story',
+            title: "Our Shared Story",
+            subtitle: "Building Communities Together",
+            content: "For over 75 years, GCU has been a beacon of education in the Southwest. Just as A.R. Mays builds physical foundations, we build the intellectual and spiritual foundations of the next generation. Together, our story is one of growth, resilience, and a commitment to excellence in the Phoenix valley.",
+            quote: "Education | Service | Integrity",
+            image: "/assets/proposal/student-life.jpg"
+        },
+        // 3. Problem
+        {
+            id: 'problem-1',
+            type: 'problem',
+            title: "The Challenge",
+            description: "The construction industry faces a critical shortage of qualified, values-driven leadership talent.",
+            points: [
+                { title: "Talent Gap", description: "Difficulty finding job-ready graduates with practical management skills." },
+                { title: "Retention", description: "High turnover rates in early-career professionals." },
+                { title: "Culture Match", description: "Need for employees who align with core company values." }
+            ]
+        },
+        // 4. Content (Scope)
+        {
+            id: 'content-1',
+            type: 'content',
+            title: "Strategic Content & Pillars",
+            image: "/assets/proposal/basketball-action.jpg",
             elements: [
                 {
-                    title: "Center for Workforce Development",
-                    description: "Our team will collaborate closely with A.R. Mays to anticipate hiring needs from within the mechanical pathway.",
+                    title: "Workforce Development Center",
+                    description: "Collaborate to anticipate hiring needs within the mechanical pathway.",
                     items: [
-                        "Premier Access to Students (Class lectures, hands-on training)",
-                        "Advisory Board Seat to support curriculum development",
-                        "Pathway Graduation Designated Table"
+                        "Premier Access to Students",
+                        "Advisory Board Seat",
+                        "Pathway Graduation Table"
                     ]
                 },
                 {
-                    title: "College of Business and Engineering",
-                    description: "Integration into the Construction Management program through a talent pipeline and classroom collaboration.",
+                    title: "Academic Integration",
+                    description: "Integration into Construction Management via talent pipeline.",
                     items: [
-                        "Talent Acquisition Pipeline (VIP placement at career fairs)",
-                        "Guest Lecturing Opportunities",
-                        "Corporate Partner Wall Branding"
+                        "Talent Acquisition Pipeline",
+                        "Guest Lecturing",
+                        "Partner Wall Branding"
                     ]
                 },
                 {
-                    title: "GCU All Access Pass",
-                    description: "Receive athletic passes to GCU games and events to attend with clients, students, or staff.",
+                    title: "All Access Pass",
+                    description: "Athletic passes to GCU games and events for client engagement.",
                     items: [
-                        "Complimentary athletic passes",
-                        "Opportunity to host clients and engage prospects",
-                        "Team nights at games"
+                        "Computery Athletic Passes",
+                        "Client Hosting Opportunities",
+                        "Team Nights"
                     ]
                 }
             ]
         },
+        // 5. Impact Charts (Stats)
         {
-            id: 'investment-1',
-            type: 'pricing',
-            title: "Annual Partnership Investment",
+            id: 'impact-1',
+            type: 'impact',
+            title: "Impact & Reach",
+            stats: [
+                {
+                    label: "On-Campus Students",
+                    value: "25,000",
+                    suffix: "+",
+                    description: "Vibrant community"
+                },
+                {
+                    label: "Online Learners",
+                    value: "108,000",
+                    suffix: "+",
+                    description: "National reach"
+                },
+                {
+                    label: "Total Enrollment",
+                    value: "133,000",
+                    suffix: "+",
+                    description: "Projected Fall 2025"
+                },
+                {
+                    label: "Tuition Freeze",
+                    value: "17",
+                    suffix: " Years",
+                    description: "Affordability focus"
+                }
+            ]
+        },
+        // 6. Proposal (Investment)
+        {
+            id: 'proposal-1',
+            type: 'investment',
+            title: "The Proposal",
             elements: [
                 {
-                    item: "Annual Donation Suggestion",
+                    item: "Annual Partnership Investment",
                     cost: "$10,000"
                 },
                 {
@@ -169,7 +274,7 @@ export const INITIAL_PROPOSAL_DATA: ProposalData = {
                     cost: "",
                 },
                 {
-                    item: "Total",
+                    item: "Total Commitment",
                     cost: "$10,000",
                     isTotal: true
                 }

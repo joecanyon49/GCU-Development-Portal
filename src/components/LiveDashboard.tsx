@@ -324,7 +324,7 @@ export default function LiveDashboard() {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
-            maximumFractionDigits: 0,
+            maximumFractionDigits: val > 1000000 ? 2 : 0,
             notation: val > 1000000 ? 'compact' : 'standard'
         }).format(val);
     };
@@ -635,25 +635,32 @@ export default function LiveDashboard() {
                                 </div>
                             </div>
                             <div className="space-y-4">
-                                {sortedTeamData.slice(0, 5).map((member) => (
-                                    <div key={member.email} className="flex items-center gap-4 p-3 bg-white/5 rounded-xl border border-white/5">
-                                        <div className={`
+                                {sortedTeamData.slice(0, 5).map((member) => {
+                                    const isRaisedSort = sortType === 'raised';
+                                    const primaryValue = isRaisedSort ? formatCurrency(member.actualRaised) : `${(member.performance * 100).toFixed(1)}%`;
+                                    const secondaryLabel = isRaisedSort ? 'Completion' : 'Raised';
+                                    const secondaryValue = isRaisedSort ? `${(member.performance * 100).toFixed(1)}%` : formatCurrency(member.actualRaised);
+
+                                    return (
+                                        <div key={member.email} className="flex items-center gap-4 p-3 bg-white/5 rounded-xl border border-white/5">
+                                            <div className={`
                                             w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm
                                             ${member.rank === 1 ? 'bg-yellow-500 text-black' :
-                                                member.rank === 2 ? 'bg-gray-300 text-black' :
-                                                    member.rank === 3 ? 'bg-amber-600 text-white' : 'bg-gray-700 text-gray-400'}
+                                                    member.rank === 2 ? 'bg-gray-300 text-black' :
+                                                        member.rank === 3 ? 'bg-amber-600 text-white' : 'bg-gray-700 text-gray-400'}
                                         `}>
-                                            {member.rank}
+                                                {member.rank}
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-white font-medium truncate">{member.name}</p>
+                                                <p className="text-xs text-gray-400">{secondaryLabel}: {secondaryValue}</p>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="text-green-400 font-bold text-sm">{primaryValue}</p>
+                                            </div>
                                         </div>
-                                        <div className="flex-1 min-w-0">
-                                            <p className="text-white font-medium truncate">{member.name}</p>
-                                            <p className="text-xs text-gray-400">Completion: {(member.performance * 100).toFixed(1)}%</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="text-green-400 font-bold text-sm">{formatCurrency(member.actualRaised)}</p>
-                                        </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </div>
 
@@ -666,7 +673,7 @@ export default function LiveDashboard() {
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={teamData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
-                                        <XAxis dataKey="name" stroke="#9CA3AF" tick={{ fill: '#9CA3AF', fontSize: 12 }} axisLine={false} tickLine={false} interval={0} textAnchor="middle" height={30} />
+                                        <XAxis dataKey="name" stroke="#9CA3AF" tick={{ fill: '#9CA3AF', fontSize: 10 }} axisLine={false} tickLine={false} interval={0} textAnchor="middle" height={30} />
                                         <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF', fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={(val) => `$${val / 1000}k`} />
                                         <Tooltip content={<TeamTooltip />} cursor={{ fill: '#ffffff05' }} />
                                         <Legend verticalAlign="top" wrapperStyle={{ paddingBottom: '20px' }} />

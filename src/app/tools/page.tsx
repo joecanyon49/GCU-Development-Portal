@@ -1,297 +1,189 @@
 import Link from "next/link";
-import { ArrowLeft, FileSpreadsheet, FileText, Download, ExternalLink, Calendar, ClipboardCheck, MapPin, Users, Bot, Sparkles, Wand2, Mail, ArrowRight, CheckCircle } from "lucide-react";
+import { ArrowLeft, FileSpreadsheet, FileText, Download, ExternalLink, Calendar, ClipboardCheck, MapPin, Users, Bot, Sparkles, Wand2, Mail, ArrowRight, CheckCircle, LayoutGrid, Zap } from "lucide-react";
 
 export default function Tools() {
+    const mainTools = [
+        {
+            title: "Proposal Generator",
+            description: "AI-powered proposal creation for partnerships.",
+            icon: Wand2,
+            href: "/tools/proposal-builder",
+            color: "text-gcu-purple-light",
+            bgColor: "bg-gcu-purple/20",
+            borderColor: "hover:border-gcu-purple/50",
+            status: "Available Now"
+        },
+        {
+            title: "Pipeline GPT",
+            description: "Analyze donors and portfolios with AI.",
+            icon: Bot,
+            href: "https://chatgpt.com/g/g-68e8240ceae481919645e89d26dedb98-pipeline-ai",
+            external: true,
+            color: "text-blue-400",
+            bgColor: "bg-blue-500/20",
+            borderColor: "hover:border-blue-500/50",
+            status: "New Tool"
+        },
+        {
+            title: "Meeting Brief Builder",
+            description: "Create pre-meeting email briefs in seconds.",
+            icon: Mail,
+            href: "/tools/email-builder",
+            color: "text-green-400",
+            bgColor: "bg-green-500/20",
+            borderColor: "hover:border-green-500/50",
+            status: "Available Now"
+        },
+        {
+            title: "Interactive Campus Map",
+            description: "Explore the GCU masterplan in 3D.",
+            icon: MapPin,
+            href: "/tools/campus-map",
+            color: "text-orange-400",
+            bgColor: "bg-orange-500/20",
+            borderColor: "hover:border-orange-500/50",
+            status: "Beta"
+        }
+    ];
+
+    const resources = [
+        {
+            title: "Stat Sheet / QC Ledger",
+            description: "Track quality contacts & weekly stats.",
+            href: "https://docs.google.com/spreadsheets/d/1MZ0AmontxOCn8Nt82UvrHf2c8rQNNOeVsVEQl-5IqaQ/edit?gid=0#gid=0",
+            icon: FileSpreadsheet,
+            color: "text-green-400",
+            bgColor: "bg-green-500/10"
+        },
+        {
+            title: "The Keys (Passwords)",
+            description: "Master password reference sheet.",
+            href: "https://gcumail-my.sharepoint.com/:x:/g/personal/konnor_bennett_gcu_edu/ETl969c60btGhLauzWh0QmIB0azqQuLNoBqDiQExQ5JsdA?e=e7Ec32",
+            icon: Users, // Using Users as a placeholder for 'Keys' distinct icon if needed, or FileSpreadsheet
+            color: "text-yellow-400",
+            bgColor: "bg-yellow-500/10"
+        },
+        {
+            title: "NIL Projections 2025",
+            description: "Latest NIL financial data.",
+            href: "https://gcumail-my.sharepoint.com/:x:/r/personal/maysen_chelin_gcu_edu/Documents/NIL%20projections%202025.xlsx?d=w083130ab0cbd48118a1a48ed3e211565&csf=1&web=1&e=jG9pYA",
+            icon: FileSpreadsheet,
+            color: "text-blue-400",
+            bgColor: "bg-blue-500/10"
+        }
+    ];
+
+    const forms = [
+        { title: "QC Submission", href: "https://forms.gle/iAMP1kJDJsBnZj6Y7", icon: ClipboardCheck },
+        { title: "Golf Cart Reservation", href: "https://form.asana.com/?k=jR61Fl-CGNGNpol&A&d=1108959473510111", icon: Calendar },
+        { title: "Tour Room Book", href: "https://form.asana.com/?k=qCPdr8YU05H8d5&A&d=1108959473510111", icon: MapPin },
+        { title: "Meeting Room Book", href: "https://form.asana.com/?k=v0iTquxtvNF5NAx6hcC34g&d=1108959473510111", icon: Users },
+        { title: "Conference Request", href: "https://form.asana.com/?k=lM2oRbNgEdpMNXj0Lyy5Eg&d=1108959473510111", icon: Calendar },
+        { title: "Feedback & Ticketing", href: "https://form.asana.com/?k=tSEse9ShZH6KgX-Lg0XBGw&d=1108959473510111", icon: Bot },
+    ];
+
     return (
-        <div className="space-y-12 pb-20">
+        <div className="space-y-10 pb-20">
             {/* Header */}
-            <div className="flex items-center gap-4">
-                <Link href="/" className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
-                    <ArrowLeft size={20} />
-                </Link>
-                <div>
-                    <h1 className="text-3xl font-bold text-white">Advancement Tools & Forms</h1>
-                    <p className="text-gray-400">Essential reports, spreadsheets, and request forms.</p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-white/10 pb-8">
+                <div className="flex items-center gap-4">
+                    <Link href="/" className="p-3 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all border border-white/5 hover:border-white/10">
+                        <ArrowLeft size={20} />
+                    </Link>
+                    <div>
+                        <h1 className="text-3xl font-bold text-white tracking-tight">Advancement Tools</h1>
+                        <p className="text-gray-400 mt-1">Access your suite of development resources</p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-gray-400">
+                    <Zap size={14} className="text-yellow-400" />
+                    <span>All systems operational</span>
                 </div>
             </div>
 
-            {/* Featured: Proposal Generator */}
-            <div className="bg-gradient-to-br from-gcu-purple to-black border border-gcu-purple/20 rounded-3xl p-8 relative overflow-hidden group">
-                <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                    <div className="flex-1">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gcu-purple/20 text-gcu-purple-light text-sm font-medium mb-4 border border-gcu-purple/20">
-                            <Sparkles size={14} />
-                            <span>Available Now</span>
-                        </div>
-                        <h2 className="text-3xl font-bold text-white mb-4">Proposal Generator</h2>
-                        <p className="text-gray-300 text-lg mb-8 max-w-2xl">
-                            Automatically generate professional proposals for clients. Input key details and let AI craft the perfect pitch for GCU partnership.
-                        </p>
+            {/* Main Tools Grid */}
+            <section>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {mainTools.map((tool) => (
                         <Link
-                            href="/tools/proposal-builder"
-                            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold border border-white/10 transition-all"
+                            key={tool.title}
+                            href={tool.href}
+                            target={tool.external ? "_blank" : undefined}
+                            className={`group relative p-6 rounded-3xl bg-card border border-card-border ${tool.borderColor} hover:shadow-2xl hover:shadow-black/50 transition-all duration-300 flex flex-col h-full overflow-hidden`}
                         >
-                            Open Generator <Wand2 size={18} />
+                            <div className={`absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500`}>
+                                <tool.icon size={120} />
+                            </div>
+
+                            <div className="relative z-10 flex flex-col h-full">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className={`p-3 rounded-2xl ${tool.bgColor} ${tool.color}`}>
+                                        <tool.icon size={24} />
+                                    </div>
+                                    <span className="px-2 py-1 rounded-md bg-white/5 border border-white/5 text-[10px] uppercase font-bold tracking-wider text-gray-400">
+                                        {tool.status}
+                                    </span>
+                                </div>
+
+                                <div className="mt-auto">
+                                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-white/90">{tool.title}</h3>
+                                    <p className="text-sm text-gray-400 line-clamp-2">{tool.description}</p>
+                                </div>
+                            </div>
                         </Link>
-                    </div>
-                    <div className="w-full md:w-1/3 aspect-video bg-black/20 rounded-2xl flex items-center justify-center border border-white/10 shadow-2xl">
-                        <FileText size={64} className="text-white/20" />
-                    </div>
+                    ))}
                 </div>
+            </section>
 
-                {/* Background Glow */}
-                <div className="absolute top-0 right-0 w-96 h-96 bg-gcu-purple/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-            </div>
-
-            {/* Pipeline GPT Section */}
-            <div className="bg-gradient-to-br from-gcu-purple-dark/50 to-black border border-gcu-purple/20 rounded-3xl p-8 relative overflow-hidden">
-                <div className="relative z-10">
-                    <div className="flex flex-col md:flex-row gap-8 items-start">
-                        <div className="flex-1 space-y-6">
-                            <div className="flex items-center gap-3 mb-2">
-                                <div className="p-2 bg-gcu-purple/20 rounded-lg text-gcu-purple-light">
-                                    <Bot size={24} />
-                                </div>
-                                <h2 className="text-2xl font-bold text-white">Pipeline GPT</h2>
-                            </div>
-
-                            <div>
-                                <h3 className="text-xl font-bold text-white mb-2">New Tool: Pipeline AI</h3>
-                                <p className="text-gray-300">
-                                    Instantly locate and summarize donor records, understand donor motivations, and analyze portfolio progress using natural language.
-                                </p>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
-                                    <h4 className="font-medium text-white mb-2 flex items-center gap-2">
-                                        <CheckCircle size={16} className="text-gcu-purple-light" /> Donor Lookup
-                                    </h4>
-                                    <p className="text-xs text-gray-400 italic">"Is Robertson Auto Parts in the pipeline?"</p>
-                                </div>
-                                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
-                                    <h4 className="font-medium text-white mb-2 flex items-center gap-2">
-                                        <CheckCircle size={16} className="text-gcu-purple-light" /> Background Context
-                                    </h4>
-                                    <p className="text-xs text-gray-400 italic">"What does Jerry Kolowski do for work?"</p>
-                                </div>
-                                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
-                                    <h4 className="font-medium text-white mb-2 flex items-center gap-2">
-                                        <CheckCircle size={16} className="text-gcu-purple-light" /> Portfolio Analysis
-                                    </h4>
-                                    <p className="text-xs text-gray-400 italic">"How many Warm Leads does Sarah Lee manage?"</p>
-                                </div>
-                            </div>
-
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Resources Column */}
+                <section className="lg:col-span-2 space-y-6">
+                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                        <LayoutGrid size={20} className="text-gcu-purple" />
+                        Documents & Resources
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {resources.map((resource) => (
                             <Link
-                                href="https://chatgpt.com/g/g-68e8240ceae481919645e89d26dedb98-pipeline-ai"
+                                key={resource.title}
+                                href={resource.href}
                                 target="_blank"
-                                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-black font-bold hover:bg-gray-200 transition-colors"
+                                className="group flex items-start gap-4 p-5 rounded-2xl bg-card border border-card-border hover:border-white/20 hover:bg-white/5 transition-all"
                             >
-                                Launch Pipeline GPT <ExternalLink size={18} />
+                                <div className={`p-3 rounded-xl ${resource.bgColor} ${resource.color} group-hover:scale-105 transition-transform`}>
+                                    <resource.icon size={20} />
+                                </div>
+                                <div className="flex-1">
+                                    <h3 className="font-bold text-white group-hover:text-gray-200 transition-colors">{resource.title}</h3>
+                                    <p className="text-xs text-gray-500 mt-1">{resource.description}</p>
+                                </div>
+                                <ExternalLink size={16} className="text-gray-600 group-hover:text-gray-400 transition-colors" />
                             </Link>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Background decoration */}
-                <div className="absolute top-0 right-0 w-96 h-96 bg-gcu-purple/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-            </div>
-
-
-            {/* Email Builder Section */}
-            <div className="bg-card border border-card-border rounded-3xl p-8 relative overflow-hidden hover:border-gcu-purple/50 transition-all duration-300 group">
-                <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                    <div className="flex-1">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gcu-purple/20 text-gcu-purple-light text-sm font-medium mb-4 border border-gcu-purple/20">
-                            <Mail size={14} />
-                            <span>Available Now</span>
-                        </div>
-                        <h2 className="text-3xl font-bold text-white mb-4">Meeting Brief Builder</h2>
-                        <p className="text-gray-300 text-lg mb-8 max-w-2xl">
-                            Create perfectly formatted pre-meeting email briefs in seconds. Fill in the blanks, add attendees, and copy the result.
-                        </p>
-                        <Link
-                            href="/tools/email-builder"
-                            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gcu-purple hover:bg-gcu-purple-light text-white font-bold transition-all shadow-lg shadow-gcu-purple/25"
-                        >
-                            Open Email Builder <ArrowRight size={18} />
-                        </Link>
-                    </div>
-                    <div className="w-full md:w-1/3 aspect-video bg-black/20 rounded-2xl flex items-center justify-center border border-white/10 shadow-2xl group-hover:scale-105 transition-transform duration-500">
-                        <Mail size={64} className="text-gcu-purple-light" />
-                    </div>
-                </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Column 1: Sheets & Reports */}
-                <section className="space-y-6">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 bg-green-500/20 rounded-lg text-green-400">
-                            <FileSpreadsheet size={24} />
-                        </div>
-                        <h2 className="text-2xl font-bold text-white">Sheets & Reports</h2>
-                    </div>
-
-                    <div className="space-y-4">
-                        {/* Stat Sheet */}
-                        <Link
-                            href="https://docs.google.com/spreadsheets/d/1MZ0AmontxOCn8Nt82UvrHf2c8rQNNOeVsVEQl-5IqaQ/edit?gid=0#gid=0"
-                            target="_blank"
-                            className="group block p-6 rounded-2xl bg-card border border-card-border hover:border-green-500/50 transition-all duration-300"
-                        >
-                            <div className="flex items-start justify-between mb-4">
-                                <div className="p-3 bg-green-500/10 rounded-xl text-green-400 group-hover:scale-110 transition-transform">
-                                    <FileSpreadsheet size={24} />
-                                </div>
-                                <ExternalLink size={20} className="text-gray-500 group-hover:text-white transition-colors" />
-                            </div>
-                            <h3 className="text-lg font-bold text-white mb-2 group-hover:text-green-400 transition-colors">Stat Sheet / QC Ledger</h3>
-                            <p className="text-sm text-gray-400">Track quality contacts, metrics, and weekly stats.</p>
-                        </Link>
-
-                        {/* The Keys Download */}
-                        {/* The Keys Link */}
-                        <Link
-                            href="https://gcumail-my.sharepoint.com/:x:/g/personal/konnor_bennett_gcu_edu/ETl969c60btGhLauzWh0QmIB0azqQuLNoBqDiQExQ5JsdA?e=e7Ec32"
-                            target="_blank"
-                            className="group block p-6 rounded-2xl bg-card border border-card-border hover:border-yellow-500/50 transition-all duration-300"
-                        >
-                            <div className="flex items-start justify-between mb-4">
-                                <div className="p-3 bg-yellow-500/10 rounded-xl text-yellow-400 group-hover:scale-110 transition-transform">
-                                    <ExternalLink size={24} />
-                                </div>
-                                <ExternalLink size={20} className="text-gray-500 group-hover:text-white transition-colors" />
-                            </div>
-                            <h3 className="text-lg font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors">The Keys (Password Sheet)</h3>
-                            <p className="text-sm text-gray-400">View the master password reference sheet (SharePoint).</p>
-                        </Link>
-
-                        {/* NIL Projections Download */}
-                        {/* NIL Projections Link */}
-                        <Link
-                            href="https://gcumail-my.sharepoint.com/:x:/r/personal/maysen_chelin_gcu_edu/Documents/NIL%20projections%202025.xlsx?d=w083130ab0cbd48118a1a48ed3e211565&csf=1&web=1&e=jG9pYA"
-                            target="_blank"
-                            className="group block p-6 rounded-2xl bg-card border border-card-border hover:border-blue-500/50 transition-all duration-300"
-                        >
-                            <div className="flex items-start justify-between mb-4">
-                                <div className="p-3 bg-blue-500/10 rounded-xl text-blue-400 group-hover:scale-110 transition-transform">
-                                    <ExternalLink size={24} />
-                                </div>
-                                <ExternalLink size={20} className="text-gray-500 group-hover:text-white transition-colors" />
-                            </div>
-                            <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">NIL Projections 2025</h3>
-                            <p className="text-sm text-gray-400">View the latest NIL financial projections (SharePoint).</p>
-                        </Link>
+                        ))}
                     </div>
                 </section>
 
-                {/* Column 2: Forms */}
+                {/* Forms Column */}
                 <section className="space-y-6">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 bg-gcu-purple/20 rounded-lg text-gcu-purple-light">
-                            <FileText size={24} />
-                        </div>
-                        <h2 className="text-2xl font-bold text-white">Forms</h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-4">
-                        {/* QC Submission */}
-                        <Link
-                            href="https://forms.gle/iAMP1kJDJsBnZj6Y7"
-                            target="_blank"
-                            className="flex items-center gap-4 p-4 rounded-xl bg-card border border-card-border hover:bg-white/5 hover:border-gcu-purple/50 transition-all group"
-                        >
-                            <div className="p-2 bg-gcu-purple/10 rounded-lg text-gcu-purple-light">
-                                <ClipboardCheck size={20} />
-                            </div>
-                            <div className="flex-1">
-                                <h3 className="font-bold text-white group-hover:text-gcu-purple-light transition-colors">QC Submission Form</h3>
-                                <p className="text-xs text-gray-400">Submit quality contacts.</p>
-                            </div>
-                            <ExternalLink size={16} className="text-gray-500 group-hover:text-white" />
-                        </Link>
-
-                        {/* Golf Cart Reservation */}
-                        <Link
-                            href="https://form.asana.com/?k=jR61Fl-CGNGNpol&A&d=1108959473510111"
-                            target="_blank"
-                            className="flex items-center gap-4 p-4 rounded-xl bg-card border border-card-border hover:bg-white/5 hover:border-gcu-purple/50 transition-all group"
-                        >
-                            <div className="p-2 bg-gcu-purple/10 rounded-lg text-gcu-purple-light">
-                                <Calendar size={20} />
-                            </div>
-                            <div className="flex-1">
-                                <h3 className="font-bold text-white group-hover:text-gcu-purple-light transition-colors">Golf Cart Reservation</h3>
-                                <p className="text-xs text-gray-400">Reserve a cart for campus tours.</p>
-                            </div>
-                            <ExternalLink size={16} className="text-gray-500 group-hover:text-white" />
-                        </Link>
-
-                        {/* Tour Room Reservation */}
-                        <Link
-                            href="https://form.asana.com/?k=qCPdr8YU05H8d5&A&d=1108959473510111"
-                            target="_blank"
-                            className="flex items-center gap-4 p-4 rounded-xl bg-card border border-card-border hover:bg-white/5 hover:border-gcu-purple/50 transition-all group"
-                        >
-                            <div className="p-2 bg-gcu-purple/10 rounded-lg text-gcu-purple-light">
-                                <MapPin size={20} />
-                            </div>
-                            <div className="flex-1">
-                                <h3 className="font-bold text-white group-hover:text-gcu-purple-light transition-colors">Tour Room Reservation</h3>
-                                <p className="text-xs text-gray-400">Book the tour room.</p>
-                            </div>
-                            <ExternalLink size={16} className="text-gray-500 group-hover:text-white" />
-                        </Link>
-
-                        {/* Meeting Room Reservation */}
-                        <Link
-                            href="https://form.asana.com/?k=v0iTquxtvNF5NAx6hcC34g&d=1108959473510111"
-                            target="_blank"
-                            className="flex items-center gap-4 p-4 rounded-xl bg-card border border-card-border hover:bg-white/5 hover:border-gcu-purple/50 transition-all group"
-                        >
-                            <div className="p-2 bg-gcu-purple/10 rounded-lg text-gcu-purple-light">
-                                <Users size={20} />
-                            </div>
-                            <div className="flex-1">
-                                <h3 className="font-bold text-white group-hover:text-gcu-purple-light transition-colors">Meeting Room Reservation</h3>
-                                <p className="text-xs text-gray-400">Reserve a conference room.</p>
-                            </div>
-                            <ExternalLink size={16} className="text-gray-500 group-hover:text-white" />
-                        </Link>
-
-                        {/* Conference Request */}
-                        <Link
-                            href="https://form.asana.com/?k=lM2oRbNgEdpMNXj0Lyy5Eg&d=1108959473510111"
-                            target="_blank"
-                            className="flex items-center gap-4 p-4 rounded-xl bg-card border border-card-border hover:bg-white/5 hover:border-gcu-purple/50 transition-all group"
-                        >
-                            <div className="p-2 bg-gcu-purple/10 rounded-lg text-gcu-purple-light">
-                                <Calendar size={20} />
-                            </div>
-                            <div className="flex-1">
-                                <h3 className="font-bold text-white group-hover:text-gcu-purple-light transition-colors">Conference & Event Request</h3>
-                                <p className="text-xs text-gray-400">Request support for events.</p>
-                            </div>
-                            <ExternalLink size={16} className="text-gray-500 group-hover:text-white" />
-                        </Link>
-
-                        {/* Feedback & Ticketing */}
-                        <Link
-                            href="https://form.asana.com/?k=tSEse9ShZH6KgX-Lg0XBGw&d=1108959473510111"
-                            target="_blank"
-                            className="flex items-center gap-4 p-4 rounded-xl bg-card border border-card-border hover:bg-white/5 hover:border-gcu-purple/50 transition-all group"
-                        >
-                            <div className="p-2 bg-gcu-purple/10 rounded-lg text-gcu-purple-light">
-                                <Bot size={20} />
-                            </div>
-                            <div className="flex-1">
-                                <h3 className="font-bold text-white group-hover:text-gcu-purple-light transition-colors">Feedback & Ticketing</h3>
-                                <p className="text-xs text-gray-400">Submit feedback or open a ticket for AI tools.</p>
-                            </div>
-                            <ExternalLink size={16} className="text-gray-500 group-hover:text-white" />
-                        </Link>
+                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                        <ClipboardCheck size={20} className="text-blue-400" />
+                        Quick Forms
+                    </h2>
+                    <div className="space-y-3">
+                        {forms.map((form) => (
+                            <Link
+                                key={form.title}
+                                href={form.href}
+                                target="_blank"
+                                className="group flex items-center gap-3 p-3 rounded-xl bg-card border border-transparent hover:bg-white/5 hover:border-white/10 transition-all"
+                            >
+                                <div className="p-2 bg-white/5 rounded-lg text-gray-400 group-hover:text-blue-400 group-hover:bg-blue-400/10 transition-colors">
+                                    <form.icon size={16} />
+                                </div>
+                                <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors flex-1">{form.title}</span>
+                                <ExternalLink size={14} className="text-gray-600 group-hover:text-gray-400 opacity-0 group-hover:opacity-100 transition-all" />
+                            </Link>
+                        ))}
                     </div>
                 </section>
             </div>

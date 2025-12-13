@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.80",
+    "@vis.gl/react-google-maps": "^1.7.1",
     "ai": "^5.0.108",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.25",

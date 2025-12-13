@@ -5,7 +5,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Editor from '@/components/Editor';
-import { Preview } from '@/components/Preview';
+import Preview from '@/components/Preview';
 import { ProposalData, INITIAL_PROPOSAL_DATA } from '@/types/proposal';
 import { X, Maximize, Printer, ArrowLeft } from 'lucide-react';
 
@@ -72,6 +72,15 @@ export default function ProposalBuilder() {
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
+                    <button
+                        onClick={() => {
+                            localStorage.setItem('current_proposal_preview', JSON.stringify(data));
+                            window.open('/tools/proposal-builder/view', '_blank');
+                        }}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#2a2a2a] hover:bg-[#3a3a3a] text-gray-200 hover:text-white text-sm font-bold transition-all border border-white/10"
+                    >
+                        <Maximize size={16} /> Open Preview
+                    </button>
                     <button
                         onClick={handlePrint}
                         className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gcu-purple hover:bg-gcu-purple-dark text-white text-sm font-bold transition-all shadow-lg shadow-gcu-purple/20">

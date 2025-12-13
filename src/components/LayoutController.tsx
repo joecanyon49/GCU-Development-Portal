@@ -11,19 +11,19 @@ interface LayoutControllerProps {
 
 export default function LayoutController({ children, userName }: LayoutControllerProps) {
     const pathname = usePathname();
-    const isProposalBuilder = pathname?.startsWith('/tools/proposal-builder');
+    const isFullScreenTool = pathname?.startsWith('/tools/proposal-builder') || pathname?.startsWith('/tools/campus-map');
 
     return (
         <div className="min-h-screen flex bg-background text-foreground">
             {/* Sidebar - Conditionally Rendered */}
-            {!isProposalBuilder && (
+            {!isFullScreenTool && (
                 <Sidebar userName={userName} />
             )}
 
             {/* Main Content Area */}
             <main className={clsx(
                 "flex-1 min-h-screen transition-all duration-300",
-                !isProposalBuilder && "md:ml-64" // Add margin only if sidebar is present
+                !isFullScreenTool && "md:ml-64" // Add margin only if sidebar is present
             )}>
                 {children}
             </main>

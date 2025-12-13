@@ -12,7 +12,7 @@ import { logout } from '../app/actions/auth';
 const navItems = [
     { name: 'Dashboard', href: '/', icon: Home },
     { name: 'Training', href: '/training', icon: BookOpen },
-    { name: 'Contacts', href: '/contacts', icon: Users },
+    // { name: 'Contacts', href: '/contacts', icon: Users },
     { name: 'Tools', href: '/tools', icon: Wrench },
     { name: 'Workday', href: 'https://www.myworkday.com/wday/authgwy/gcu/login.htmld?returnTo=%2fgcu%2fd%2ftask%2f2998%242673.htmld', icon: Clock, external: true },
     { name: 'Asana', href: 'https://asana.com', icon: LayoutGrid, external: true },
@@ -26,12 +26,15 @@ export default function Sidebar({ userName }: { userName?: string }) {
     return (
         <>
             {/* Mobile Menu Button */}
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="fixed top-4 left-4 z-50 p-2 bg-gcu-purple rounded-lg md:hidden text-white shadow-lg"
-            >
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            {/* Mobile Menu Button - Only visible when closed */}
+            {!isOpen && (
+                <button
+                    onClick={() => setIsOpen(true)}
+                    className="fixed top-4 left-4 z-50 p-2 bg-gcu-purple rounded-lg md:hidden text-white shadow-lg"
+                >
+                    <Menu size={24} />
+                </button>
+            )}
 
             {/* Sidebar Container */}
             <AnimatePresence mode="wait">
@@ -44,16 +47,22 @@ export default function Sidebar({ userName }: { userName?: string }) {
                         isOpen ? "translate-x-0" : "-translate-x-full"
                     )}
                 >
-                    <div className="flex flex-col h-full p-6">
+                    <div className="flex flex-col h-full p-6 relative">
+                        {/* Mobile Close Button - Inside Sidebar */}
+                        <button
+                            onClick={() => setIsOpen(false)}
+                            className="absolute top-4 right-4 p-1 text-gray-400 hover:text-white md:hidden"
+                        >
+                            <X size={24} />
+                        </button>
+
                         {/* Logo */}
                         <div className="flex items-center gap-3 mb-10 px-2">
                             <div className="w-10 h-10 bg-gcu-purple rounded-xl flex items-center justify-center shadow-lg shadow-gcu-purple/20 relative overflow-hidden shrink-0">
-                                <Image
-                                    src="/assets/gcu-icon-v2.png"
+                                <img
+                                    src="/assets/sidebar-logo.png"
                                     alt="GCU Icon"
-                                    fill
-                                    className="object-contain p-1.5"
-                                    priority
+                                    className="w-full h-full object-contain p-1.5"
                                 />
                             </div>
                             <div>

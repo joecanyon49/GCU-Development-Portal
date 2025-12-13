@@ -30,7 +30,7 @@ export default async function RootLayout({
   const userName = cookieStore.get('auth_user')?.value;
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
